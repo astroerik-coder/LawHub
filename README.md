@@ -6,10 +6,11 @@ LawHub project
 
 1. Clone the repo
    ```sh
-  git@github.com:astroerik-coder/LawHub.git
+   git@github.com:astroerik-coder/LawHub.git
    ```
-2. Update packages
+2. Install packages
    ```sh
    flutter pub upgrade
    ```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
