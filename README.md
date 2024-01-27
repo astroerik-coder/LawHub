@@ -4,11 +4,11 @@ LawHub project
 
 ### Installation
 
-. Clone the repo
+1. Clone the repo
    ```sh
   git@github.com:astroerik-coder/LawHub.git
    ```
-3. Update packages
+2. Update packages
    ```sh
    flutter pub upgrade
    ```
