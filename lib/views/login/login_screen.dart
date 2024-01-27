@@ -76,7 +76,7 @@ class LoginScreen extends StatelessWidget {
             return null;
           },
         ),
-      ] */,
+      ],*/
       termsOfService: [
         TermOfService(
           id: 'newsletter',
