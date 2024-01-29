@@ -250,13 +250,13 @@ class LoginScreen extends StatelessWidget {
         }
         return _signupUser(signupData);
       },
-      onSubmitAnimationCompleted: () {
+/*       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(
           FadePageRoute(
             builder: (context) => const DashboardScreen(),
           ),
         );
-      },
+      }, */
       onRecoverPassword: (name) {
         debugPrint('Recover password info');
         debugPrint('Name: $name');

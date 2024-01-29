@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+/* import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/theme.dart';
 import 'package:flutter_login/widgets.dart';
@@ -88,7 +88,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             child: Hero(
               tag: Constants.logoTag,
               child: Image.asset(
-                'assets/',
+                'assets/images/LawHub.png',
                 filterQuality: FilterQuality.high,
                 height: 30,
               ),
@@ -235,36 +235,6 @@ class _DashboardScreenState extends State<DashboardScreen>
           label: 'Payment',
           interval: const Interval(step * 2, aniInterval + step * 2),
         ),
-        _buildButton(
-          icon: const Icon(FontAwesomeIcons.chartLine),
-          label: 'Report',
-          interval: const Interval(0, aniInterval),
-        ),
-        _buildButton(
-          icon: const Icon(Icons.vpn_key),
-          label: 'Register',
-          interval: const Interval(step, aniInterval + step),
-        ),
-        _buildButton(
-          icon: const Icon(FontAwesomeIcons.clockRotateLeft),
-          label: 'History',
-          interval: const Interval(step * 2, aniInterval + step * 2),
-        ),
-        _buildButton(
-          icon: const Icon(FontAwesomeIcons.ellipsis),
-          label: 'Other',
-          interval: const Interval(0, aniInterval),
-        ),
-        _buildButton(
-          icon: const Icon(FontAwesomeIcons.magnifyingGlass, size: 20),
-          label: 'Search',
-          interval: const Interval(step, aniInterval + step),
-        ),
-        _buildButton(
-          icon: const Icon(FontAwesomeIcons.sliders, size: 20),
-          label: 'Settings',
-          interval: const Interval(step * 2, aniInterval + step * 2),
-        ),
       ],
     );
   }
@@ -298,7 +268,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       onWillPop: () async {
         // La lógica que desees ejecutar al intentar retroceder
         _goToLogin(context);
-        return false; // true si está permitido retroceder, false de lo contrario
+        return true; // true si está permitido retroceder, false de lo contrario
       },
       child: SafeArea(
         child: Scaffold(
@@ -345,3 +315,4 @@ class _DashboardScreenState extends State<DashboardScreen>
     );
   }
 }
+ */
