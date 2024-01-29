@@ -1,4 +1,5 @@
- import 'package:flutter/material.dart';
+/* 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './views/login/components/transition_route_observer.dart';
 import './views/login/login_screen.dart';
@@ -65,10 +66,10 @@ class MyApp extends StatelessWidget {
     );
   }
 }
- 
-/* 
+  */
 
 import 'package:flutter/material.dart';
+import 'package:lawhub/views/login/login_screen.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 void main() {
@@ -202,38 +203,43 @@ class ExampleSidebarX extends StatelessWidget {
           height: 100,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Image.asset('assets'),
+            child: Image.asset('assets/images/LawHub.png'),
           ),
         );
       },
       items: [
         SidebarXItem(
           icon: Icons.home,
-          label: 'Home',
+          label: 'Inicio',
           onTap: () {
-            debugPrint('Home');
+            debugPrint('Inicio');
           },
         ),
         const SidebarXItem(
           icon: Icons.search,
-          label: 'Search',
+          label: 'Buscar',
         ),
         const SidebarXItem(
           icon: Icons.people,
-          label: 'People',
+          label: 'Abogados',
         ),
         const SidebarXItem(
           icon: Icons.favorite,
-          label: 'Favorites',
+          label: 'Favoritos',
         ),
         const SidebarXItem(
-          iconWidget: FlutterLogo(size: 20),
-          label: 'Flutter',
+          icon: Icons.meeting_room,
+          label: 'Citas',
+        ),
+        const SidebarXItem(
+          icon: Icons.login_outlined,
+          label: 'Login',
         ),
       ],
     );
   }
 }
+
 
 class _ScreensExample extends StatelessWidget {
   const _ScreensExample({
@@ -279,21 +285,21 @@ class _ScreensExample extends StatelessWidget {
 String _getTitleByIndex(int index) {
   switch (index) {
     case 0:
-      return 'Home';
+      return 'Inicio';
     case 1:
-      return 'Search';
+      return 'Buscar';
     case 2:
-      return 'People';
+      return 'Abogados';
     case 3:
-      return 'Favorites';
+      return 'Favoritos';
     case 4:
       return 'Custom iconWidget';
     case 5:
-      return 'Profile';
+      return 'Perfil';
     case 6:
-      return 'Settings';
+      return 'Configuraciones';
     default:
-      return 'Not found page';
+      return 'No funciona la pagina';
   }
 }
 
@@ -303,4 +309,4 @@ const scaffoldBackgroundColor = Color(0xFF464667);
 const accentCanvasColor = Color(0xFF3E3E61);
 const white = Colors.white;
 final actionColor = const Color(0xFF5F5FA7).withOpacity(0.6);
-final divider = Divider(color: white.withOpacity(0.3), height: 1); */
+final divider = Divider(color: white.withOpacity(0.3), height: 1);
