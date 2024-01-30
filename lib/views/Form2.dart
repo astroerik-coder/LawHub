@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/Abogados_Model.dart';
 import '../services/Abogados_Services.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Form2 extends StatefulWidget {
   const Form2({Key? key}) : super(key: key);
@@ -41,21 +42,34 @@ class _Form2 extends State<Form2> {
             )
           : ListView(
               children: _lista!
-                  .map(
-                    (e) => Card(
-                      child: ListTile(
-                        title: Text(e.nombre.toString()),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(e.contacto.correo.toString()),
-                            Text(e.disponibilidad.horario.toString()),
-                            Text(e.tarifasHonorarios.monto.toString()),
-                          ],
+                  .map((e) => Card(
+                        child: ListTile(
+                          title: Text(e.nombre.toString()),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(e.contacto.correo.toString()),
+                              Text(e.disponibilidad.horario.toString()),
+                              Text(e.tarifasHonorarios.monto.toString()),
+                              if (e.fotosPerfil != null &&
+                                  e.fotosPerfil.isNotEmpty)
+                                Column(
+                                  children: e.fotosPerfil
+                                      .map(
+                                        (url) => CachedNetworkImage(
+                                          imageUrl: url,
+                                          placeholder: (context, url) =>
+                                              CircularProgressIndicator(),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error),
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
-                  )
+                      ))
                   .toList(),
             ),
     );
