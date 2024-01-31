@@ -51,21 +51,7 @@ class _Form2 extends State<Form2> {
                               Text(e.contacto.correo.toString()),
                               Text(e.disponibilidad.horario.toString()),
                               Text(e.tarifasHonorarios.monto.toString()),
-                              if (e.fotosPerfil != null &&
-                                  e.fotosPerfil.isNotEmpty)
-                                Column(
-                                  children: e.fotosPerfil
-                                      .map(
-                                        (url) => CachedNetworkImage(
-                                          imageUrl: url,
-                                          placeholder: (context, url) =>
-                                              CircularProgressIndicator(),
-                                          errorWidget: (context, url, error) =>
-                                              Icon(Icons.error),
-                                        ),
-                                      )
-                                      .toList(),
-                                ),
+                              
                             ],
                           ),
                         ),

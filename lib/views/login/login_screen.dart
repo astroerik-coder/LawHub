@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
       onConfirmRecover: _signupConfirm,
       onConfirmSignup: _signupConfirm,
       loginAfterSignUp: false,
-      /* loginProviders: [
+      loginProviders: [
         LoginProvider(
           icon: FontAwesomeIcons.google,
           label: 'Google',
@@ -76,7 +76,7 @@ class LoginScreen extends StatelessWidget {
             return null;
           },
         ),
-      ],*/
+      ],
       termsOfService: [
         TermOfService(
           id: 'newsletter',
