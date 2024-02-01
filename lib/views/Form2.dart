@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/Abogados_Model.dart';
 import '../services/Abogados_Services.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 
 class Form2 extends StatefulWidget {
   const Form2({Key? key}) : super(key: key);
