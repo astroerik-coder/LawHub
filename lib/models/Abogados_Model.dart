@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Abogado {
   String nombre;
   String especializacion;
