@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_login/flutter_login.dart';
-import '../dashboard/dashboard_screen.dart';
-import '../login/components/constants.dart';
-import '../login/components/custom.route.dart';
-import '../login/components/users.dart';
+import '../components/constants.dart';
+import '../components/users.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginScreen extends StatelessWidget {
