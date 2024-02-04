@@ -1,5 +1,5 @@
+import 'package:LawHub/models/Abogados_Model.dart';
 import 'package:flutter/material.dart';
-import 'package:lawhub/models/Abogados_Model.dart';
 
 class LawyerDetailPage extends StatelessWidget {
   final Abogado lawyer;
