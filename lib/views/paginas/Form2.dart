@@ -1,49 +1,42 @@
 import 'package:flutter/material.dart';
-import '../models/Abogados_Model.dart';
-import '../services/Abogados_Services.dart';
-import 'components/colors.dart';
+import '../../models/Abogados_Model.dart';
+import '../../services/Abogados_Services.dart';
+import '../components/colors.dart';
 import 'LawyerDetailPage.dart';
-import '../views/components/colors.dart';
+import '../components/colors.dart';
 
-class Form2 extends StatefulWidget {
-  const Form2({Key? key}) : super(key: key);
 
-  @override
-  State<Form2> createState() => _Form2();
-}
-
-class _Form2 extends State<Form2> {
+class Form2 extends StatelessWidget {
   final AbogadosService _abogadosService = AbogadosService();
-
-  List<Abogado>? _lista;
-
-  loadAbogados() async {
-    _lista = await _abogadosService.getAbogado();
-
-    if (mounted) {
-      setState(() {});
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    loadAbogados();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: _lista == null || _lista!.isEmpty
-          ? Center(
-              child: SizedBox.square(
-                dimension: 50.0,
-                child: CircularProgressIndicator(),
-              ),
-            )
-          : ListView(
-              children: _lista!
+    return FutureBuilder<List<Abogado>?>(
+      future: _abogadosService.getAbogados(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: SizedBox.square(
+              dimension: 50.0,
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else if (snapshot.hasError) {
+          print("Error: ${snapshot.error}");
+          return Center(
+            child: Text('Error al cargar datos'),
+          );
+        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(
+            child: Text('No se encontraron datos'),
+          );
+        } else {
+          List<Abogado> _lista = snapshot.data!;
+
+          return Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: ListView(
+              children: _lista
                   .map(
                     (e) => GestureDetector(
                       onTap: () {
@@ -68,7 +61,9 @@ class _Form2 extends State<Form2> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Image.network(
-                                    e.fotosPerfil?.isNotEmpty == true ? e.fotosPerfil!.first : '',
+                                    e.fotosPerfil?.isNotEmpty == true
+                                        ? e.fotosPerfil!.first
+                                        : '',
                                     height: 100,
                                     width: 100,
                                     fit: BoxFit.cover,
@@ -84,20 +79,23 @@ class _Form2 extends State<Form2> {
                                           e.nombre.toString(),
                                           style: MyTextSample.title(context)!
                                               .copyWith(
-                                                  color: MyColorsSample.grey_80),
+                                                  color:
+                                                      MyColorsSample.grey_80),
                                         ),
                                         Container(height: 5),
                                         Text(
                                           e.contacto.correo.toString(),
                                           style: MyTextSample.body1(context)!
-                                              .copyWith(color: Colors.grey[500]),
+                                              .copyWith(
+                                                  color: Colors.grey[500]),
                                         ),
                                         Container(height: 10),
                                         Text(
                                           MyStringsSample.card_text,
                                           maxLines: 2,
                                           style: MyTextSample.subhead(context)!
-                                              .copyWith(color: Colors.grey[700]),
+                                              .copyWith(
+                                                  color: Colors.grey[700]),
                                         ),
                                       ],
                                     ),
@@ -112,9 +110,14 @@ class _Form2 extends State<Form2> {
                   )
                   .toList(),
             ),
+          );
+        }
+      },
     );
   }
 }
+
+
 class MyTextSample {
   static TextStyle? display4(BuildContext context) {
     return Theme.of(context).textTheme.displayLarge;

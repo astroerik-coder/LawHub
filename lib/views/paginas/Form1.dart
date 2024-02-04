@@ -1,38 +1,9 @@
+import 'package:LawHub/models/Abogados_Model.dart';
+import 'package:LawHub/services/Abogados_Services.dart';
 import 'package:flutter/material.dart';
-import 'package:lawhub/models/Abogados_Model.dart';
-import 'package:lawhub/services/Abogados_Services.dart';
-import 'Form2.dart';
 
-class Form1 extends StatefulWidget {
-  const Form1({super.key});
-
-  @override
-  State<Form1> createState() => _Form1State();
-}
-
-class _Form1State extends State<Form1> {
+class Form1 extends StatelessWidget {
   final AbogadosService _abogadosService = AbogadosService();
-  List<Abogado>? _apiDataList;
-
-  @override
-  void initState() {
-    super.initState();
-    loadApiData();
-  }
-
-  Future<void> loadApiData() async {
-    try {
-      List<Abogado>? apiData = await _abogadosService.getAbogado();
-
-      if (apiData != null) {
-        setState(() {
-          _apiDataList = apiData;
-        });
-      }
-    } catch (error) {
-      print('Error al cargar datos de la API: $error');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +13,6 @@ class _Form1State extends State<Form1> {
           child: Column(
             verticalDirection: VerticalDirection.down,
             children: [
-/*               barraBusqueda(), */
               miCard(),
               Container(
                 alignment: Alignment.topLeft,
@@ -55,8 +25,31 @@ class _Form1State extends State<Form1> {
                   ),
                 ),
               ),
-              destinations(),
-              Form2(),
+              FutureBuilder<List<Abogado>?>(
+                future: _abogadosService.getAbogados(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: SizedBox.square(
+                        dimension: 50.0,
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error al cargar datos'),
+                    );
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(
+                      child: Text('No se encontraron datos'),
+                    );
+                  } else {
+                    List<Abogado> _apiDataList = snapshot.data!;
+
+                    return destinations(_apiDataList);
+                  }
+                },
+              ),
               const SizedBox(height: 10)
             ],
           ),
@@ -106,20 +99,19 @@ class _Form1State extends State<Form1> {
     );
   }
 
-  Container destinations() {
+  Container destinations(List<Abogado> apiDataList) {
     return Container(
       alignment: Alignment.bottomLeft,
       margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
       height: 350,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: _apiDataList?.length ?? 0,
+        itemCount: apiDataList.length,
         itemBuilder: (context, index) {
-          Abogado? abogado = _apiDataList?[index];
+          Abogado abogado = apiDataList[index];
 
           return InkWell(
-            onTap: () {
-            },
+            onTap: () {},
             child: Container(
               margin: const EdgeInsets.only(right: 10.0),
               child: Card(
@@ -140,7 +132,7 @@ class _Form1State extends State<Form1> {
                             padding:
                                 const EdgeInsets.only(right: 90, bottom: 10),
                             child: Text(
-                              abogado?.nombre ?? 'Sin nombre',
+                              abogado.nombre ?? 'Sin nombre',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
@@ -162,7 +154,7 @@ class _Form1State extends State<Form1> {
                                 Container(
                                   margin: const EdgeInsets.only(right: 100),
                                   child: Text(
-                                    abogado?.ubicacion.ciudad ??
+                                    abogado.ubicacion.ciudad ??
                                         'Sin información',
                                     style: TextStyle(
                                       color: Colors.white,
@@ -182,7 +174,7 @@ class _Form1State extends State<Form1> {
                                 Container(
                                   margin: const EdgeInsets.only(right: 10),
                                   child: Text(
-                                    abogado?.disponibilidad.toString() ?? 'S/C',
+                                    abogado.disponibilidad.toString() ?? 'S/C',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 15,
@@ -200,7 +192,7 @@ class _Form1State extends State<Form1> {
                         image: DecorationImage(
                           fit: BoxFit.cover,
                           image: NetworkImage(
-                            abogado?.fotosPerfil?.first ??
+                            abogado.fotosPerfil?.first ??
                                 "assets/images/LawHub.png",
                           ),
                         ),
