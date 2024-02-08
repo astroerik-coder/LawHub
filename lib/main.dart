@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'LawHub',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromARGB(139, 255, 153, 0)),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'LawHub'),
@@ -34,7 +34,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
-  static const List<Widget> _contenidoForm = [Form1(), Form2(), LoginScreen()];
+  static const List<Widget> _contenidoForm = [Form1(), Form2()];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -59,16 +59,12 @@ class _MyHomePageState extends State<MyHomePage> {
             label: "Inicio",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Abogados",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.login),
-            label: "Login",
+            icon: Icon(Icons.search),
+            label: "Buscar",
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: const Color.fromARGB(255, 203, 7, 237),
+        selectedItemColor: Color.fromARGB(255, 237, 210, 7),
         onTap: _onItemTapped,
       ),
     );

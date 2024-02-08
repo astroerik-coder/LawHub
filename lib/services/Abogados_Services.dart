@@ -39,4 +39,21 @@ class AbogadosService {
       throw Exception('No se pudieron cargar los datos: $ex');
     }
   }
+
+  Future<List<Abogado>> getAbogadosByType(String tipo) async {
+    final response = await http.get(Uri.parse('demo4364339.mockable.io/api/abogados'));
+    if (response.statusCode == 200) {
+      final List<dynamic> responseData = json.decode(response.body);
+      List<Abogado> filteredList = responseData
+          .map((json) => Abogado.fromJson(json))
+          .where((abogado) => abogado.especializacion
+              .toLowerCase()
+              .contains(tipo.toLowerCase()))
+          .toList();
+        developer.log(tipo);
+      return filteredList;
+    } else {
+      throw Exception('Error al cargadr datos desde la API');
+    }
+  }
 }
