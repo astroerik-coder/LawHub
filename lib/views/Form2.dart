@@ -1,3 +1,4 @@
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import '../models/Abogados_Model.dart';
 import '../services/Abogados_Services.dart';
@@ -16,6 +17,7 @@ class _Form2 extends State<Form2> {
   List<Abogado>? _lista;
   List<Abogado>? _filteredLista;
   TextEditingController _searchController = TextEditingController();
+  final GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
 
   @override
   void initState() {
@@ -38,15 +40,17 @@ class _Form2 extends State<Form2> {
   void filterAbogados(String query) {
     setState(() {
       _filteredLista = _lista!
-          .where((abogado) =>
-              abogado.especializacion.toLowerCase().contains(query.toLowerCase()))
+          .where((abogado) => abogado.especializacion
+              .toLowerCase()
+              .contains(query.toLowerCase()))
           .toList();
     });
   }
 
   void searchByType() async {
     String query = _searchController.text.toLowerCase();
-    List<Abogado>? filteredAbogados = await _abogadosService.getAbogadosByType(query);
+    List<Abogado>? filteredAbogados =
+        await _abogadosService.getAbogadosByType(query);
     setState(() {
       _filteredLista = filteredAbogados;
     });
@@ -58,17 +62,44 @@ class _Form2 extends State<Form2> {
       padding: const EdgeInsets.all(15.0),
       child: Column(
         children: [
-          TextField(
-            controller: _searchController,
-            decoration: InputDecoration(
-              hintText: 'Buscar por tipo de abogado',
-              suffixIcon: IconButton(
-                onPressed: () {
-                  searchByType();
-                },
-                icon: Icon(Icons.search),
-              ),
-            ),
+          Autocomplete<String>(
+            optionsBuilder: (TextEditingValue textEditingValue) {
+              if (_lista != null) {
+                return _lista!
+                    .map((abogado) => abogado.especializacion)
+                    .where((especializacion) => especializacion
+                        .toLowerCase()
+                        .contains(textEditingValue.text.toLowerCase()))
+                    .toSet()
+                    .toList();
+              } else {
+                return [];
+              }
+            },
+            onSelected: (String value) {
+              _searchController.text = value;
+              searchByType();
+            },
+            fieldViewBuilder: (BuildContext context,
+                TextEditingController controller,
+                FocusNode focusNode,
+                VoidCallback onFieldSubmitted) {
+              return TextField(
+                controller: controller,
+                focusNode: focusNode,
+                decoration: InputDecoration(
+                  hintText: 'Buscar por tipo de abogado',
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      onFieldSubmitted();
+                      searchByType();
+                    },
+                    icon: Icon(Icons.search),
+                  ),
+                ),
+                onChanged: filterAbogados,
+              );
+            },
           ),
           SizedBox(height: 10),
           Expanded(
@@ -85,7 +116,8 @@ class _Form2 extends State<Form2> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LawyerDetailPage(lawyer: abogado),
+                              builder: (context) =>
+                                  LawyerDetailPage(lawyer: abogado),
                             ),
                           );
                         },
@@ -113,7 +145,8 @@ class _Form2 extends State<Form2> {
                                     Container(width: 20),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: <Widget>[
                                           Container(height: 5),
                                           Text(
@@ -133,7 +166,8 @@ class _Form2 extends State<Form2> {
                                           ),
                                           Container(height: 5),
                                           Text(
-                                            abogado.firmaLegal.nombre.toString(),
+                                            abogado.firmaLegal.nombre
+                                                .toString(),
                                             style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black87,
@@ -141,7 +175,8 @@ class _Form2 extends State<Form2> {
                                           ),
                                           Container(height: 5),
                                           Text(
-                                            abogado.disponibilidad.horario.toString(),
+                                            abogado.disponibilidad.horario
+                                                .toString(),
                                             style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black87,
