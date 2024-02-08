@@ -12,6 +12,7 @@ class Form1 extends StatefulWidget {
 class _Form1State extends State<Form1> {
   final AbogadosService _abogadosService = AbogadosService();
   List<Abogado>? _apiDataList;
+  List<String> tiposAbogados = ["Civil", "Penal", "Familiar", "Laboral"];
 
   @override
   void initState() {
@@ -39,62 +40,37 @@ class _Form1State extends State<Form1> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            verticalDirection: VerticalDirection.down,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-/*               barraBusqueda(), */
-              miCard(),
-              Container(
-                alignment: Alignment.topLeft,
-                margin: const EdgeInsets.only(left: 20),
-                child: const Text(
-                  "Mejores abogados",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+              abogados(),
+              SizedBox(
+                height: 150.0,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 2,
+                  itemBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      width: 200.0,
+                      child: Card(
+                        child: Center(child: Text(tiposAbogados[0])),
+                      ),
+                    );
+                  },
                 ),
               ),
-              destinations(),
-              const SizedBox(height: 10)
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Container miCard() {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: [
-              // Parte izquierda con título y botón
-              Expanded(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Título de la Card',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 8),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text('Botón'),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Image.network(
-                  'https://images.unsplash.com/photo-1491336477066-31156b5e4f35?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                  fit: BoxFit.cover,
+              SizedBox(
+                height: 150.0,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 2,
+                  itemBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      width: 200.0,
+                      child: Card(
+                        child: Center(child: Text(tiposAbogados[1])),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
@@ -104,7 +80,7 @@ class _Form1State extends State<Form1> {
     );
   }
 
-  Container destinations() {
+  Container abogados() {
     return Container(
       alignment: Alignment.bottomLeft,
       margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
@@ -116,8 +92,7 @@ class _Form1State extends State<Form1> {
           Abogado? abogado = _apiDataList?[index];
 
           return InkWell(
-            onTap: () {
-            },
+            onTap: () {},
             child: Container(
               margin: const EdgeInsets.only(right: 10.0),
               child: Card(
