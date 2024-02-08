@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login/flutter_login.dart';
+import 'package:lawhub/views/login/login_screen.dart';
 import '../models/Abogados_Model.dart';
 
 class LawyerDetailPage extends StatelessWidget {
@@ -52,10 +54,16 @@ class LawyerDetailPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: 10),
-                        Text('${lawyer.nombre}', style: TextStyle(fontSize: 30)),
-                        Text('Especialización: ${lawyer.especializacion}', style: TextStyle(fontSize: 20, color: Color(0xFF7b8ea3))),
+                        Text('${lawyer.nombre}',
+                            style: TextStyle(fontSize: 30)),
+                        Text('Especialización: ${lawyer.especializacion}',
+                            style: TextStyle(
+                                fontSize: 20, color: Color(0xFF7b8ea3))),
                         Divider(color: Colors.grey),
-                        Text('Ubicación: ${lawyer.ubicacion.ciudad}, ${lawyer.ubicacion.pais}', style: TextStyle(fontSize: 16, color: Color(0xFF7b8ea3))),
+                        Text(
+                            'Ubicación: ${lawyer.ubicacion.ciudad}, ${lawyer.ubicacion.pais}',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xFF7b8ea3))),
                       ],
                     ),
                   )
@@ -99,12 +107,38 @@ class LawyerDetailPage extends StatelessWidget {
             SizedBox(height: 30),
             Container(
               height: 200,
-              child: Text('Información adicional: ${lawyer.informacionLegal}', style: TextStyle(fontSize: 16, color: Colors.grey)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('${lawyer.contacto.correo}',
+                      style: TextStyle(fontSize: 16, color: Colors.black87)),
+                  SizedBox(height:10), 
+                  Text('${lawyer.contacto.telefono}',
+                    style: TextStyle(fontSize: 16, color: Colors.black87),
+                  ),
+                  SizedBox(height:10), 
+                  Text('${lawyer.firmaLegal.nombre}',
+                    style: TextStyle(fontSize: 16, color: Colors.black87),
+                  ),
+                  SizedBox(height:10), 
+                  Text('${lawyer.tarifasHonorarios.monto}''${lawyer.tarifasHonorarios.tipo}',
+                    style: TextStyle(fontSize: 16, color: Colors.black87),
+                  ),
+                  SizedBox(height:10), 
+                  Text('${lawyer.disponibilidad.dias}',
+                    style: TextStyle(fontSize: 16, color: Colors.black87),
+                  ),
+                  SizedBox(height:10), 
+                  Text('${lawyer.disponibilidad.horario}',
+                    style: TextStyle(fontSize: 16, color: Colors.black87),
+                  ),
+                ],
+              ),
             ),
             Divider(color: Color(0xFF7b8ea3)),
             GestureDetector(
               onTap: () {
-                /* Navigator.push(context, MaterialPageRoute(builder: (context) => AllBooks())); */
+                 Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen())); 
               },
               child: Container(
                 padding: const EdgeInsets.only(right: 20),
@@ -112,7 +146,8 @@ class LawyerDetailPage extends StatelessWidget {
                   children: [
                     Text('Agendar una cita', style: TextStyle(fontSize: 20)),
                     Expanded(child: Container()),
-                    IconButton(icon: Icon(Icons.arrow_forward_ios), onPressed: null),
+                    IconButton(
+                        icon: Icon(Icons.arrow_forward_ios), onPressed: null),
                   ],
                 ),
               ),
