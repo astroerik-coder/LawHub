@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../models/Abogados_Model.dart';
 import '../services/Abogados_Services.dart';
 import 'LawyerDetailPage.dart';
-import '../views/components/colors.dart';
 
 class Form2 extends StatefulWidget {
   const Form2({Key? key}) : super(key: key);

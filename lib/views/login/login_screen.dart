@@ -1,210 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:lawhub/views/Inicio.dart';
+import 'package:lawhub/views/components/custom.route.dart';
 import '../components/constants.dart';
 import '../components/users.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-class LoginScreen extends StatelessWidget {
-  static const routeName = '/auth';
-
-  const LoginScreen({Key? key});
-
-  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
-
-  Future<String?> _loginUser(LoginData data) {
-    return Future.delayed(loginTime).then((_) {
-      if (!mockUsers.containsKey(data.name)) {
-        return 'El usuario no existe';
-      }
-      if (mockUsers[data.name] != data.password) {
-        return 'La contraseña no coincide';
-      }
-      return null;
-    });
-  }
-
-  Future<String?> _signupUser(SignupData data) {
-    return Future.delayed(loginTime).then((_) {
-      return null;
-    });
-  }
-
-  Future<String?> _recoverPassword(String name) {
-    return Future.delayed(loginTime).then((_) {
-      if (!mockUsers.containsKey(name)) {
-        return 'El usuario no existe';
-      }
-      return null;
-    });
-  }
-
-  Future<String?> _signupConfirm(String error, LoginData data) {
-    return Future.delayed(loginTime).then((_) {
-      return null;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FlutterLogin(
-      title: Constants.appName, 
-      logo: const AssetImage('assets/images/LawHub.png'),
-      logoTag: Constants.logoTag,
-      titleTag: Constants.titleTag,
-      navigateBackAfterRecovery: true,
-      onConfirmRecover: _signupConfirm,
-      onConfirmSignup: _signupConfirm,
-      loginAfterSignUp: false,
-      loginProviders: [
-        LoginProvider(
-          icon: FontAwesomeIcons.google,
-          label: 'Google',
-          callback: () async {
-            return null;
-          },
-        ),
-        LoginProvider(
-          icon: FontAwesomeIcons.githubAlt,
-          label: 'GitHub',
-          callback: () async {
-            debugPrint('Iniciando sesión con GitHub');
-            await Future.delayed(loginTime);
-            debugPrint('Deteniendo inicio de sesión con GitHub');
-            return null;
-          },
-        ),
-      ],
-      termsOfService: [
-        TermOfService(
-          id: 'newsletter',
-          mandatory: false,
-          text: 'Suscripción al boletín',
-        ),
-        TermOfService(
-          id: 'general-term',
-          mandatory: true,
-          text: 'Términos del servicio',
-          linkUrl: 'https://github.com/NearHuscarl/flutter_login',
-        ),
-      ],
-      additionalSignupFields: [
-        const UserFormField(
-          keyName: 'Usuario',
-          icon: Icon(FontAwesomeIcons.userLarge),
-        ),
-        const UserFormField(keyName: 'Nombre'),
-        const UserFormField(keyName: 'Apellido'),
-        UserFormField(
-          keyName: 'Número de teléfono',
-          displayName: 'Número de teléfono',
-          userType: LoginUserType.phone,
-          fieldValidator: (value) {
-            final phoneRegExp = RegExp(
-              '^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}\$',
-            );
-            if (value != null &&
-                value.length < 7 &&
-                !phoneRegExp.hasMatch(value)) {
-              return 'Este no es un número de teléfono válido';
-            }
-            return null;
-          },
-        ),
-      ],
-      userValidator: (value) {
-        if (!value!.contains('@') || !value.endsWith('.com')) {
-          return 'El correo electrónico debe contener "@" y terminar con ".com"';
-        }
-        return null;
-      },
-      passwordValidator: (value) {
-        if (value!.isEmpty) {
-          return 'La contraseña está vacía';
-        }
-        return null;
-      },
-      onLogin: (loginData) {
-        debugPrint('Información de inicio de sesión');
-        debugPrint('Usuario: ${loginData.name}');
-        debugPrint('Contraseña: ${loginData.password}');
-        return _loginUser(loginData);
-      },
-      onSignup: (signupData) {
-        debugPrint('Información de registro');
-        debugPrint('Usuario: ${signupData.name}');
-        debugPrint('Contraseña: ${signupData.password}');
-
-        signupData.additionalSignupData?.forEach((key, value) {
-          debugPrint('$key: $value');
-        });
-        if (signupData.termsOfService.isNotEmpty) {
-          debugPrint('Términos del servicio: ');
-          for (final element in signupData.termsOfService) {
-            debugPrint(
-              ' - ${element.term.id}: ${element.accepted == true ? 'aceptado' : 'rechazado'}',
-            );
-          }
-        }
-        return _signupUser(signupData);
-      },
-      onRecoverPassword: (name) {
-        debugPrint('Información de recuperación de contraseña');
-        debugPrint('Nombre: $name');
-        return _recoverPassword(name);
-        // Mostrar diálogo de nueva contraseña
-      },
-      headerWidget: const IntroWidget(),
-      messages: LoginMessages(
-        userHint: 'Usuario',
-        passwordHint: 'Contraseña',
-        confirmPasswordHint: 'Confirmar contraseña',
-        loginButton: 'Iniciar Sesión',
-        signupButton: 'Registrarse',
-        forgotPasswordButton: '¿Olvidaste tu contraseña?',
-        recoverPasswordButton: 'AYÚDAME',
-        goBackButton: 'REGRESAR',
-        confirmPasswordError: 'Las contraseñas no coinciden',
-        recoverPasswordIntro: 'No te preocupes. Sucede todo el tiempo.',
-        recoverPasswordDescription: 'Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.',
-        recoverPasswordSuccess: 'Contraseña recuperada con éxito',
-        flushbarTitleError: '¡Oh no!',
-        flushbarTitleSuccess: '¡Éxito!',
-      ),
-    );
-  }
-}
-
-class IntroWidget extends StatelessWidget {
-  const IntroWidget({Key? key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        Row(
-          children: <Widget>[
-            Expanded(child: Divider()),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Autenticar"),
-            ),
-            Expanded(child: Divider()),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-
-/* import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_login/flutter_login.dart';
-import '../components/constants.dart';
-import '../components/users.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 class LoginScreen extends StatelessWidget {
   static const routeName = '/auth';
 
@@ -212,7 +13,7 @@ class LoginScreen extends StatelessWidget {
 
   Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
 
-  Future<String?> _loginUser(LoginData data) {
+  Future<String?> _loginUser(LoginData data, BuildContext context) {
     return Future.delayed(loginTime).then((_) {
       if (!mockUsers.containsKey(data.name)) {
         return 'User no existe';
@@ -220,6 +21,10 @@ class LoginScreen extends StatelessWidget {
       if (mockUsers[data.name] != data.password) {
         return 'Password does not match';
       }
+      // Inicio de sesión exitoso, actualiza el estado de autenticación
+    /*   final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      authProvider.login(); */
+      
       return null;
     });
   }
@@ -248,9 +53,10 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
-      title: Constants.appName, 
+      title: Constants.appName,
 /*       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
- */   logo: const AssetImage('assets/images/LawHub.png'),
+ */
+      logo: const AssetImage('assets/images/LawHub.png'),
       logoTag: Constants.logoTag,
       titleTag: Constants.titleTag,
       navigateBackAfterRecovery: true,
@@ -274,19 +80,6 @@ class LoginScreen extends StatelessWidget {
             debugPrint('stop github sign in');
             return null;
           },
-        ),
-      ],
-      termsOfService: [
-        TermOfService(
-          id: 'newsletter',
-          mandatory: false,
-          text: 'Newsletter subscription',
-        ),
-        TermOfService(
-          id: 'general-term',
-          mandatory: true,
-          text: 'Term of services',
-          linkUrl: 'https://github.com/NearHuscarl/flutter_login',
         ),
       ],
       additionalSignupFields: [
@@ -429,7 +222,7 @@ class LoginScreen extends StatelessWidget {
         debugPrint('Login info');
         debugPrint('Name: ${loginData.name}');
         debugPrint('Password: ${loginData.password}');
-        return _loginUser(loginData);
+        return _loginUser(loginData, context); // Pasa el contexto a _loginUser
       },
       onSignup: (signupData) {
         debugPrint('Signup info');
@@ -449,13 +242,13 @@ class LoginScreen extends StatelessWidget {
         }
         return _signupUser(signupData);
       },
-/*       onSubmitAnimationCompleted: () {
+      onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(
           FadePageRoute(
-            builder: (context) => const DashboardScreen(),
+            builder: (context) => const Inicio(),
           ),
         );
-      }, */
+      },
       onRecoverPassword: (name) {
         debugPrint('Recover password info');
         debugPrint('Nombre: $name');
@@ -488,4 +281,3 @@ class IntroWidget extends StatelessWidget {
     );
   }
 }
- */

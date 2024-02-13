@@ -40,6 +40,8 @@ class AbogadosService {
     }
   }
 
+  
+
   Future<List<Abogado>> getAbogadosByType(String tipo) async {
     final response = await http
         .get(Uri.parse('https://demo4364339.mockable.io/api/abogados'));

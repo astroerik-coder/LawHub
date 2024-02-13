@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_login/flutter_login.dart';
-import 'package:lawhub/views/login/login_screen.dart';
+import 'package:lawhub/views/agendar/OnboardingPage1.dart';
 import '../models/Abogados_Model.dart';
 
 class LawyerDetailPage extends StatelessWidget {
@@ -138,7 +137,7 @@ class LawyerDetailPage extends StatelessWidget {
             Divider(color: Color(0xFF7b8ea3)),
             GestureDetector(
               onTap: () {
-                 Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen())); 
+                 Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardingPage1())); 
               },
               child: Container(
                 padding: const EdgeInsets.only(right: 20),
