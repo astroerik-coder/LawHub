@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
 import 'package:flutter/material.dart';
 import 'package:lawhub/views/Form2.dart';
 import 'package:lawhub/views/citas/ListaTareasAbogados.dart';
-import 'package:lawhub/views/login/profile/profile_screen.dart';
+import 'package:lawhub/views/profile/profile_screen.dart';
 import './views/Inicio.dart';
 import './views/components/bottom_bar.dart';
 
