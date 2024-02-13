@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lawhub/views/components/home_appbar.dart';
+import 'package:lawhub/views/components/searchbar.dart';
+import 'package:lawhub/views/estudios_juridicos/estudio_list.dart';
 
 
 class Inicio extends StatelessWidget {
@@ -30,7 +32,8 @@ class Inicio extends StatelessWidget {
           Column(
             children: [
               HomeAppbar(),
-              SearchBar(),
+              Barra(),
+              EstudioJuridicoList(),
             ],
           ),
         ],

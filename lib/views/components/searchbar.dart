@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SearchBar extends StatelessWidget {
-  const SearchBar({Key? key}) : super(key: key);
+class Barra extends StatelessWidget {
+  const Barra({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,52 +10,71 @@ class SearchBar extends StatelessWidget {
       margin: const EdgeInsets.all(30),
       height: 300,
       width: double.infinity,
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         image: DecorationImage(
           image: AssetImage('assets/images/search_bg.png'),
-          fit: BoxFit.cover
-        )
+          fit: BoxFit.cover,
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          Text(
-              'Fast Search', style: TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 26),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Busqueda rapida',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Puede buscar rápidamente \nel abogado que desee.',
+                style: TextStyle(
+                  height: 1.8,
+                  color: Colors.white.withOpacity(0.7),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 16,
+                ),
+              ),
+            ],
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            'You can Search Quickly for\n the job you want.', style: TextStyle( height: 1.8,
-              color: Colors.white.withOpacity(0.7), fontWeight: FontWeight.normal, fontSize: 16),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Container(
-            padding: EdgeInsets.all(15),
-           decoration: BoxDecoration(
-             borderRadius: BorderRadius.circular(35),
-             color: Colors.white
-           ),
-           child: Row(
-             children: [
-               Image.asset('assets/icons/search.png', width: 20),
-               SizedBox(
-                 width: 15,
-               ),
-               Text('Search', style: TextStyle(
-                 fontSize: 18, color: Colors.grey.withOpacity(0.7)
-               ),
-               ),
-             ],
-           ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 10,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(35),
+                color: Colors.white,
+              ),
+              child: Row(
+                children: [
+                  Image.asset('assets/icons/search.png', width: 20),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Buscar',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ],
       ),
     );
-
   }
 }

@@ -20,7 +20,7 @@ class HomeAppbar extends StatelessWidget {
                      crossAxisAlignment: CrossAxisAlignment.start,
                      children: const [
                        Text(
-                           'Welcome Home', style: TextStyle(color:Colors.grey,
+                           'Bienvenido', style: TextStyle(color:Colors.grey,
                            fontWeight: FontWeight.bold),
                        ),
                        SizedBox(
@@ -36,7 +36,7 @@ class HomeAppbar extends StatelessWidget {
                  ),
                  Row(
                    children: [
-                     Padding(
+                     /* Padding(
                        padding: const EdgeInsets.all(12.0),
                        child: Container(
                          margin: EdgeInsets.only(top: 35, right: 35),
@@ -59,7 +59,7 @@ class HomeAppbar extends StatelessWidget {
                            ],
                          ),
                        ),
-                     ),
+                     ), */
                      Padding(
                        padding: const EdgeInsets.all(10.0),
                        child: ClipOval(
