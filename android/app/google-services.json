@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "977963866274",
+    "project_id": "lawhub-82ed3",
+    "storage_bucket": "lawhub-82ed3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977963866274:android:262fad4bceeeb709c65ffb",
+        "android_client_info": {
+          "package_name": "erik.espe.edu.ec.lawhub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqr8vvxxl5HaywskSADLZNCulH7YqoMyM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
