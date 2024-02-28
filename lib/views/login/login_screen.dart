@@ -1,283 +1,224 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_login/flutter_login.dart';
-import 'package:lawhub/views/Inicio.dart';
-import 'package:lawhub/views/components/custom.route.dart';
-import '../components/constants.dart';
-import '../components/users.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-class LoginScreen extends StatelessWidget {
-  static const routeName = '/auth';
+import 'package:lawhub/views/login/components/my_button.dart';
+import 'package:lawhub/views/login/components/my_textfield.dart';
+import 'package:lawhub/views/login/components/square_tile.dart';
+import 'package:lawhub/views/signup/signup_screen.dart';
 
-  const LoginScreen({super.key});
-
-  Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
-
-  Future<String?> _loginUser(LoginData data, BuildContext context) {
-    return Future.delayed(loginTime).then((_) {
-      if (!mockUsers.containsKey(data.name)) {
-        return 'User no existe';
-      }
-      if (mockUsers[data.name] != data.password) {
-        return 'Password does not match';
-      }
-      // Inicio de sesión exitoso, actualiza el estado de autenticación
-    /*   final authProvider = Provider.of<AuthProvider>(context, listen: false);
-      authProvider.login(); */
-      
-      return null;
-    });
-  }
-
-  Future<String?> _signupUser(SignupData data) {
-    return Future.delayed(loginTime).then((_) {
-      return null;
-    });
-  }
-
-  Future<String?> _recoverPassword(String name) {
-    return Future.delayed(loginTime).then((_) {
-      if (!mockUsers.containsKey(name)) {
-        return 'User not exists';
-      }
-      return null;
-    });
-  }
-
-  Future<String?> _signupConfirm(String error, LoginData data) {
-    return Future.delayed(loginTime).then((_) {
-      return null;
-    });
-  }
+class LoginPage extends StatefulWidget {
+  LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return FlutterLogin(
-      title: Constants.appName,
-/*       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
- */
-      logo: const AssetImage('assets/images/LawHub.png'),
-      logoTag: Constants.logoTag,
-      titleTag: Constants.titleTag,
-      navigateBackAfterRecovery: true,
-      onConfirmRecover: _signupConfirm,
-      onConfirmSignup: _signupConfirm,
-      loginAfterSignUp: false,
-      loginProviders: [
-        LoginProvider(
-          icon: FontAwesomeIcons.google,
-          label: 'Google',
-          callback: () async {
-            return null;
-          },
-        ),
-        LoginProvider(
-          icon: FontAwesomeIcons.githubAlt,
-          label: 'GitHub',
-          callback: () async {
-            debugPrint('start github sign in');
-            await Future.delayed(loginTime);
-            debugPrint('stop github sign in');
-            return null;
-          },
-        ),
-      ],
-      additionalSignupFields: [
-        const UserFormField(
-          keyName: 'Username',
-          icon: Icon(FontAwesomeIcons.userLarge),
-        ),
-        const UserFormField(keyName: 'Name'),
-        const UserFormField(keyName: 'Surname'),
-        UserFormField(
-          keyName: 'phone_number',
-          displayName: 'Phone Number',
-          userType: LoginUserType.phone,
-          fieldValidator: (value) {
-            final phoneRegExp = RegExp(
-              '^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}\$',
-            );
-            if (value != null &&
-                value.length < 7 &&
-                !phoneRegExp.hasMatch(value)) {
-              return "This isn't a valid phone number";
-            }
-            return null;
-          },
-        ),
-      ],
-      // scrollable: true,
-      // hideProvidersTitle: false,
-      // loginAfterSignUp: false,
-      // hideForgotPasswordButton: true,
-      // hideSignUpButton: true,
-      // disableCustomPageTransformer: true,
-      // messages: LoginMessages(
-      //   userHint: 'User',
-      //   passwordHint: 'Pass',
-      //   confirmPasswordHint: 'Confirm',
-      //   loginButton: 'LOG IN',
-      //   signupButton: 'REGISTER',
-      //   forgotPasswordButton: 'Forgot huh?',
-      //   recoverPasswordButton: 'HELP ME',
-      //   goBackButton: 'GO BACK',
-      //   confirmPasswordError: 'Not match!',
-      //   recoverPasswordIntro: 'Don\'t feel bad. Happens all the time.',
-      //   recoverPasswordDescription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
-      //   recoverPasswordSuccess: 'Password rescued successfully',
-      //   flushbarTitleError: 'Oh no!',
-      //   flushbarTitleSuccess: 'Succes!',
-      //   providersTitle: 'login with'
-      // ),
-      // theme: LoginTheme(
-      //   primaryColor: Colors.teal,
-      //   accentColor: Colors.yellow,
-      //   errorColor: Colors.deepOrange,
-      //   pageColorLight: Colors.indigo.shade300,
-      //   pageColorDark: Colors.indigo.shade500,
-      //   logoWidth: 0.80,
-      //   titleStyle: TextStyle(
-      //     color: Colors.greenAccent,
-      //     fontFamily: 'Quicksand',
-      //     letterSpacing: 4,
-      //   ),
-      //   // beforeHeroFontSize: 50,
-      //   // afterHeroFontSize: 20,
-      //   bodyStyle: TextStyle(
-      //     fontStyle: FontStyle.italic,
-      //     decoration: TextDecoration.underline,
-      //   ),
-      //   textFieldStyle: TextStyle(
-      //     color: Colors.orange,
-      //     shadows: [Shadow(color: Colors.yellow, blurRadius: 2)],
-      //   ),
-      //   buttonStyle: TextStyle(
-      //     fontWeight: FontWeight.w800,
-      //     color: Colors.yellow,
-      //   ),
-      //   cardTheme: CardTheme(
-      //     color: Colors.yellow.shade100,
-      //     elevation: 5,
-      //     margin: EdgeInsets.only(top: 15),
-      //     shape: ContinuousRectangleBorder(
-      //         borderRadius: BorderRadius.circular(100.0)),
-      //   ),
-      //   inputTheme: InputDecorationTheme(
-      //     filled: true,
-      //     fillColor: Colors.purple.withOpacity(.1),
-      //     contentPadding: EdgeInsets.zero,
-      //     errorStyle: TextStyle(
-      //       backgroundColor: Colors.orange,
-      //       color: Colors.white,
-      //     ),
-      //     labelStyle: TextStyle(fontSize: 12),
-      //     enabledBorder: UnderlineInputBorder(
-      //       borderSide: BorderSide(color: Colors.blue.shade700, width: 4),
-      //       borderRadius: inputBorder,
-      //     ),
-      //     focusedBorder: UnderlineInputBorder(
-      //       borderSide: BorderSide(color: Colors.blue.shade400, width: 5),
-      //       borderRadius: inputBorder,
-      //     ),
-      //     errorBorder: UnderlineInputBorder(
-      //       borderSide: BorderSide(color: Colors.red.shade700, width: 7),
-      //       borderRadius: inputBorder,
-      //     ),
-      //     focusedErrorBorder: UnderlineInputBorder(
-      //       borderSide: BorderSide(color: Colors.red.shade400, width: 8),
-      //       borderRadius: inputBorder,
-      //     ),
-      //     disabledBorder: UnderlineInputBorder(
-      //       borderSide: BorderSide(color: Colors.grey, width: 5),
-      //       borderRadius: inputBorder,
-      //     ),
-      //   ),
-      //   buttonTheme: LoginButtonTheme(
-      //     splashColor: Colors.purple,
-      //     backgroundColor: Colors.pinkAccent,
-      //     highlightColor: Colors.lightGreen,
-      //     elevation: 9.0,
-      //     highlightElevation: 6.0,
-      //     shape: BeveledRectangleBorder(
-      //       borderRadius: BorderRadius.circular(10),
-      //     ),
-      //     // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      //     // shape: CircleBorder(side: BorderSide(color: Colors.green)),
-      //     // shape: ContinuousRectangleBorder(borderRadius: BorderRadius.circular(55.0)),
-      //   ),
-      // ),
-      userValidator: (value) {
-        if (!value!.contains('@') || !value.endsWith('.com')) {
-          return "Email must contain '@' and end with '.com'";
-        }
-        return null;
-      },
-      passwordValidator: (value) {
-        if (value!.isEmpty) {
-          return 'Password is empty';
-        }
-        return null;
-      },
-      onLogin: (loginData) {
-        debugPrint('Login info');
-        debugPrint('Name: ${loginData.name}');
-        debugPrint('Password: ${loginData.password}');
-        return _loginUser(loginData, context); // Pasa el contexto a _loginUser
-      },
-      onSignup: (signupData) {
-        debugPrint('Signup info');
-        debugPrint('Name: ${signupData.name}');
-        debugPrint('Password: ${signupData.password}');
-
-        signupData.additionalSignupData?.forEach((key, value) {
-          debugPrint('$key: $value');
-        });
-        if (signupData.termsOfService.isNotEmpty) {
-          debugPrint('Terms of service: ');
-          for (final element in signupData.termsOfService) {
-            debugPrint(
-              ' - ${element.term.id}: ${element.accepted == true ? 'accepted' : 'rejected'}',
-            );
-          }
-        }
-        return _signupUser(signupData);
-      },
-      onSubmitAnimationCompleted: () {
-        Navigator.of(context).pushReplacement(
-          FadePageRoute(
-            builder: (context) => const Inicio(),
-          ),
-        );
-      },
-      onRecoverPassword: (name) {
-        debugPrint('Recover password info');
-        debugPrint('Nombre: $name');
-        return _recoverPassword(name);
-        // Show new password dialog
-      },
-      headerWidget: const IntroWidget(),
-    );
-  }
+  State<LoginPage> createState() => _LoginPageState();
 }
 
-class IntroWidget extends StatelessWidget {
-  const IntroWidget({super.key});
+class _LoginPageState extends State<LoginPage> {
+  // text editing controllers
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  // sign user in method
+  void signUserIn() async {
+    //Show loading circle
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
+    );
+    //try sing in
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      //pop the loading cicle
+      Navigator.pop(context);
+    } on FirebaseAuthException catch (e) {
+      //pop the loading cicle
+      Navigator.pop(context); //wrong email
+      if (e.code == 'user-not-found') {
+        //show error to user
+        wrongEmailMessage();
+      } else if (e.code == 'wrong-password') {
+        wrongPasswordMessage();
+      }
+    }
+  }
+
+  //Wrong  Email Message Method
+  void wrongEmailMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          title: Text('Email incorrecto'),
+        );
+      },
+    );
+  }
+
+  //Wrong  password Message Method
+  void wrongPasswordMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          title: Text('Contraseña incorrecto'),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        Row(
-          children: <Widget>[
-            Expanded(child: Divider()),
-            Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text("Autenticar"),
-            ),
-            Expanded(child: Divider()),
-          ],
+    return Scaffold(
+      backgroundColor: Colors.grey[300],
+      body: SafeArea(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 50),
+
+              // logo
+              const Icon(
+                Icons.lock,
+                size: 100,
+              ),
+
+              const SizedBox(height: 50),
+
+              // welcome back, you've been missed!
+              Text(
+                'Bienvenido de nuevo se te ha echado de menos!',
+                style: TextStyle(
+                  color: Colors.grey[700],
+                  fontSize: 16,
+                ),
+              ),
+
+              const SizedBox(height: 25),
+
+              // email textfield
+              MyTextField(
+                controller: emailController,
+                hintText: 'Correo electronico',
+                obscureText: false,
+              ),
+
+              const SizedBox(height: 10),
+
+              // password textfield
+              MyTextField(
+                controller: passwordController,
+                hintText: 'Contraseña',
+                obscureText: true,
+              ),
+
+              const SizedBox(height: 10),
+
+              // forgot password?
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      '¿Olvidaste tu contraseña?',
+                      style: TextStyle(color: Colors.grey[600]),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 25),
+
+              // sign in button
+              MyButton(
+                onTap: signUserIn,
+                label: 'Registrarte',
+              ),
+
+              const SizedBox(height: 50),
+
+              // or continue with
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: Text(
+                        'O continua con',
+                        style: TextStyle(color: Colors.grey[700]),
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        thickness: 0.5,
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 50),
+
+              // google + apple sign in buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  // google button
+                  SquareTile(imagePath: 'assets/images/google.png'),
+
+                  SizedBox(width: 25),
+                  // apple button
+                  //SquareTile(imagePath: 'assets/images/apple.png')
+                ],
+              ),
+
+              const SizedBox(height: 50),
+
+              // not a member? register now
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '¿No estás registrado aún?',
+                    style: TextStyle(color: Colors.grey[700]),
+                  ),
+                  const SizedBox(width: 4),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUpScreen()),
+                      );
+                    },
+                    child: Text(
+                      'Regístrate ahora',
+                      style: TextStyle(
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
-      ],
+      ),
     );
   }
 }
