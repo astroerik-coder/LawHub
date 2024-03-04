@@ -6,6 +6,11 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String userName = "Rick Sanchez";
+    String userEmail = "rick@gmail.com";
+    String userPhone = "+593 987-654-321";
+    String userAddress = "Latacunga, Ecuador";
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -50,31 +55,31 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 10),
-                const Text(
-                  "Rick Sanchez",
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                Text(
+                  userName,
+                  style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 5),
-                const Text(
-                  "Latacunga, Ecuador",
-                  style: TextStyle(fontSize: 15.0),
+                Text(
+                  userAddress,
+                  style: const TextStyle(fontSize: 15.0),
                 ),
                 const SizedBox(height: 5),
-                const ListTile(
-                  leading: Icon(Icons.email),
-                  title: Text("Email"),
-                  subtitle: Text("rick@gmail.com"),
+                ListTile(
+                  leading: const Icon(Icons.email),
+                  title: const Text("Email"),
+                  subtitle: Text(userEmail),
                 ),
                 const Divider(),
-                const ListTile(
-                  leading: Icon(Icons.phone),
-                  title: Text("Telefono"),
-                  subtitle: Text("+593 987-654-321"),
+                ListTile(
+                  leading: const Icon(Icons.phone),
+                  title: const Text("Telefono"),
+                  subtitle: Text(userPhone),
                 ),
                 const Divider(),
                 const ListTile(
                   leading: Icon(Icons.location_on_rounded),
-                  title: Text("Address"),
+                  title: Text("Dirección"),
                   subtitle: Text(
                     "Juan Abel Echeverrria y Quito",
                   ),
