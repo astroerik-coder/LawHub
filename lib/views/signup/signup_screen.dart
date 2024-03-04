@@ -23,9 +23,9 @@ class SignUpScreen extends StatelessWidget {
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        print('La contraseña proporcionada es demasiado débil.');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        print('La cuenta ya existe para ese correo electrónico.');
       }
     } catch (e) {
       print(e);
@@ -42,13 +42,15 @@ class SignUpScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 50),
-              const Icon(
-                Icons.person_add,
-                size: 100,
+                  Image.asset(
+                'assets/images/LawHub.png', // Ruta de la imagen en tus activos
+                width: 200, // Ancho de la imagen
+                height: 200, // Alto de la imagen
               ),
+
               const SizedBox(height: 50),
               Text(
-                'Create an account to get started!',
+                '¡Crea una cuenta para empezar!',
                 style: TextStyle(
                   color: Colors.grey[700],
                   fontSize: 16,
@@ -57,18 +59,18 @@ class SignUpScreen extends StatelessWidget {
               const SizedBox(height: 25),
               MyTextField(
                 controller: _emailController,
-                hintText: 'Email',
+                hintText: 'Correo electrónico',
                 obscureText: false,
               ),
               const SizedBox(height: 10),
               MyTextField(
                 controller: _passwordController,
-                hintText: 'Password',
+                hintText: 'Contraseña',
                 obscureText: true,
               ),
               const SizedBox(height: 25),
               MyButton(
-                label: 'Sign Up',
+                label: 'Registrarse',
                 onTap: () => _registerUser(context),
               ),
               const SizedBox(height: 50),
@@ -76,20 +78,20 @@ class SignUpScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Already have an account?',
+                    '¿Ya tienes una cuenta?',
                     style: TextStyle(color: Colors.grey[700]),
                   ),
                   const SizedBox(width: 4),
                   TextButton(
                     onPressed: () {
-                      // Navigate to the sign-in screen
+                      // Navega a la pantalla de inicio de sesión
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => LoginPage()),
                       );
                     },
                     child: Text(
-                      'Sign In',
+                      'Inicia sesión',
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,

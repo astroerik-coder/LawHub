@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lawhub/views/login/components/my_button.dart';
 import 'package:lawhub/views/login/components/my_textfield.dart';
-import 'package:lawhub/views/login/components/square_tile.dart';
 import 'package:lawhub/views/signup/signup_screen.dart';
 
 class LoginPage extends StatefulWidget {
@@ -19,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
 
   // sign user in method
   void signUserIn() async {
-    //Show loading circle
+    // Show loading circle
     showDialog(
       context: context,
       builder: (context) {
@@ -28,19 +27,17 @@ class _LoginPageState extends State<LoginPage> {
         );
       },
     );
-    //try sing in
+
+    // Try sign in
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
       );
-      //pop the loading cicle
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
-      //pop the loading cicle
-      Navigator.pop(context); //wrong email
+      Navigator.pop(context);
       if (e.code == 'user-not-found') {
-        //show error to user
         wrongEmailMessage();
       } else if (e.code == 'wrong-password') {
         wrongPasswordMessage();
@@ -48,25 +45,41 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  //Wrong  Email Message Method
+  // Wrong Email Message Method
   void wrongEmailMessage() {
     showDialog(
       context: context,
       builder: (context) {
-        return const AlertDialog(
+        return AlertDialog(
           title: Text('Email incorrecto'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Aceptar'),
+            ),
+          ],
         );
       },
     );
   }
 
-  //Wrong  password Message Method
+//Wrong password Message Method
   void wrongPasswordMessage() {
     showDialog(
       context: context,
       builder: (context) {
-        return const AlertDialog(
-          title: Text('Contraseña incorrecto'),
+        return AlertDialog(
+          title: Text('Contraseña incorrecta'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text('Aceptar'),
+            ),
+          ],
         );
       },
     );
@@ -84,9 +97,14 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 50),
 
               // logo
-              const Icon(
+              /* const Icon(
                 Icons.lock,
                 size: 100,
+              ), */
+              Image.asset(
+                'assets/images/LawHub.png', // Ruta de la imagen en tus activos
+                width: 200, // Ancho de la imagen
+                height: 200, // Alto de la imagen
               ),
 
               const SizedBox(height: 50),
@@ -139,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
               // sign in button
               MyButton(
                 onTap: signUserIn,
-                label: 'Registrarte',
+                label: 'Registrarse',
               ),
 
               const SizedBox(height: 50),
@@ -155,13 +173,13 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.grey[400],
                       ),
                     ),
-                    Padding(
+                    /*  Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text(
                         'O continua con',
                         style: TextStyle(color: Colors.grey[700]),
                       ),
-                    ),
+                    ), */
                     Expanded(
                       child: Divider(
                         thickness: 0.5,
@@ -172,10 +190,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
 
-              const SizedBox(height: 50),
+              /* const SizedBox(height: 50), */
 
-              // google + apple sign in buttons
-              Row(
+              // google + apple sign in buttonss
+              /* Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   // google button
@@ -185,7 +203,7 @@ class _LoginPageState extends State<LoginPage> {
                   // apple button
                   //SquareTile(imagePath: 'assets/images/apple.png')
                 ],
-              ),
+              ), */
 
               const SizedBox(height: 50),
 
