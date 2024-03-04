@@ -4,7 +4,7 @@ import 'package:lawhub/views/home.dart';
 import 'package:lawhub/views/login/login_screen.dart';
 
 class AuthPage extends StatelessWidget {
-  const AuthPage({super.key});
+  const AuthPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,11 +12,11 @@ class AuthPage extends StatelessWidget {
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          //usser is logged in
+          // Usuario ha iniciado sesión
           if (snapshot.hasData) {
             return HomePage();
           }
-          //user is not logged in
+          // Usuario no ha iniciado sesión
           else {
             return LoginPage();
           }
