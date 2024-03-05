@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import './model.dart';
 
 class EstudioJuridicoDetails extends StatelessWidget {
@@ -153,8 +151,7 @@ class EstudioJuridicoDetails extends StatelessWidget {
                     // Lógica para aplicar ahora
                   },
                   style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    primary: Theme.of(context).primaryColor,
+                    elevation: 0, backgroundColor: Theme.of(context).primaryColor,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20)),
                   ),

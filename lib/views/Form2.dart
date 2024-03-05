@@ -1,8 +1,9 @@
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import '../models/Abogados_Model.dart';
 import '../services/Abogados_Services.dart';
 import 'LawyerDetailPage.dart';
+import '../views/components/colors.dart';
 
 class Form2 extends StatefulWidget {
   const Form2({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _Form2 extends State<Form2> {
   List<Abogado>? _lista;
   List<Abogado>? _filteredLista;
   TextEditingController _searchController = TextEditingController();
-  final GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
+  final GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
 
   @override
   void initState() {
@@ -26,23 +27,22 @@ class _Form2 extends State<Form2> {
 
   Future<void> loadAbogados() async {
     try {
-      List<Abogado>? lista = await _abogadosService.getAbogados();
+      List<Abogado> lista = await _abogadosService.getAbogados();
       setState(() {
         _lista = lista;
         _filteredLista = lista;
       });
     } catch (error) {
-      print('Error al cargar datos de la API: $error');
+      print('Error al cargar datos desde Firestore: $error');
     }
   }
 
   void filterAbogados(String query) {
     setState(() {
-      _filteredLista = _lista!
-          .where((abogado) => abogado.especializacion
-              .toLowerCase()
-              .contains(query.toLowerCase()))
-          .toList();
+      _filteredLista = _lista!.where((abogado) {
+        final especializacion = abogado.especializacion ?? '';
+        return especializacion.toLowerCase().contains(query.toLowerCase());
+      }).toList();
     });
   }
 
@@ -65,7 +65,7 @@ class _Form2 extends State<Form2> {
             optionsBuilder: (TextEditingValue textEditingValue) {
               if (_lista != null) {
                 return _lista!
-                    .map((abogado) => abogado.especializacion)
+                    .map((abogado) => abogado.especializacion ?? '')
                     .where((especializacion) => especializacion
                         .toLowerCase()
                         .contains(textEditingValue.text.toLowerCase()))
@@ -116,7 +116,7 @@ class _Form2 extends State<Form2> {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  LawyerDetailPage(lawyer: abogado),
+                                  LawyerDetailPage(abogado: abogado),
                             ),
                           );
                         },
@@ -134,8 +134,8 @@ class _Form2 extends State<Form2> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Image.network(
-                                      abogado.fotosPerfil?.isNotEmpty == true
-                                          ? abogado.fotosPerfil!.first
+                                      abogado.fotoPerfil.isNotEmpty == true
+                                          ? abogado.fotoPerfil ?? ''
                                           : '',
                                       height: 100,
                                       width: 100,
@@ -165,8 +165,7 @@ class _Form2 extends State<Form2> {
                                           ),
                                           Container(height: 5),
                                           Text(
-                                            abogado.firmaLegal.nombre
-                                                .toString(),
+                                            abogado.firmaLegal,
                                             style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black87,
@@ -174,8 +173,7 @@ class _Form2 extends State<Form2> {
                                           ),
                                           Container(height: 5),
                                           Text(
-                                            abogado.disponibilidad.horario
-                                                .toString(),
+                                            abogado.correo ?? '',
                                             style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.black87,

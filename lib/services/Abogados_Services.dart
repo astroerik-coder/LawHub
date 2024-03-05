@@ -1,62 +1,46 @@
-import 'dart:convert';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/Abogados_Model.dart';
-import 'package:http/http.dart' as http;
-import 'dart:developer' as developer;
 
 class AbogadosService {
   AbogadosService();
 
-  Future<List<Abogado>?> getAbogados() async {
-    List<Abogado> result = [];
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
+  Future<List<Abogado>> getAbogados() async {
+    List<Abogado> abogados = [];
 
     try {
-      var url = Uri.https('demo4364339.mockable.io', '/api/abogados');
-      var response = await http.get(url);
+      CollectionReference collectionReferenceEstudios =
+          db.collection('abogados');
+      QuerySnapshot queryEstudios = await collectionReferenceEstudios.get();
+      queryEstudios.docs.forEach((doc) {
+        // Convertir los datos del documento a un objeto Abogado y añadirlo a la lista
+        Abogado abogado = Abogado.fromJson(doc.data() as Map<String, dynamic>);
+        abogados.add(abogado);
+      });
 
-      if (response.statusCode == 200) {
-        if (response.body.isEmpty) {
-          return result;
-        } else {
-          List<dynamic> listBody = json.decode(response.body);
-          for (var item in listBody) {
-            var newAbogado = Abogado.fromJson(item);
-            result.add(newAbogado);
-          }
-        }
-      } else {
-        developer.log(
-          'Error en la solicitud HTTP: ${response.statusCode}',
-          error: response.body,
-        );
-        throw Exception(
-            'No se pudieron cargar los datos: ${response.statusCode}');
-      }
-
-      return result;
-    } catch (ex, stackTrace) {
-      developer.log('Error en la solicitud HTTP : $ex', error: stackTrace);
-      throw Exception('No se pudieron cargar los datos: $ex');
+      return abogados;
+    } catch (error) {
+      print('Error al cargar datos desde Firestore: $error');
+      throw Exception('Error al cargar datos desde Firestore: $error');
     }
   }
 
-  
-
   Future<List<Abogado>> getAbogadosByType(String tipo) async {
-    final response = await http
-        .get(Uri.parse('https://demo4364339.mockable.io/api/abogados'));
-    if (response.statusCode == 200) {
-      final List<dynamic> responseData = json.decode(response.body);
-      List<Abogado> filteredList = responseData
-          .map((json) => Abogado.fromJson(json))
-          .where((abogado) => abogado.especializacion
-              .toLowerCase()
-              .contains(tipo.toLowerCase()))
-          .toList();
-      developer.log(tipo);
-      return filteredList;
-    } else {
-      throw Exception('Error al cargadr datos desde la API');
+    try {
+      QuerySnapshot query = await db
+          .collection('abogados')
+          .where('especializacion', isEqualTo: tipo.toLowerCase())
+          .get();
+
+      List<Abogado> abogados = query.docs.map((doc) {
+        return Abogado.fromJson(doc.data() as Map<String, dynamic>);
+      }).toList();
+
+      return abogados;
+    } catch (error) {
+      print('Error al buscar abogados por tipo: $error');
+      throw Exception('Error al buscar abogados por tipo: $error');
     }
   }
 }

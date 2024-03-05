@@ -3,155 +3,136 @@ import 'package:lawhub/views/agendar/OnboardingPage1.dart';
 import '../models/Abogados_Model.dart';
 
 class LawyerDetailPage extends StatelessWidget {
-  final Abogado lawyer;
+  final Abogado abogado;
 
-  LawyerDetailPage({required this.lawyer});
+  LawyerDetailPage({required this.abogado});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 30,
         backgroundColor: Colors.white,
         elevation: 0.0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
       ),
       body: Container(
         color: Colors.white,
-        padding: const EdgeInsets.only(left: 20),
+        padding: EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 15),
-            Container(
-              child: Row(
-                children: [
-                  Material(
-                    elevation: 0.0,
-                    child: Container(
-                      height: 180,
-                      width: 150,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: Offset(0, 3),
-                          ),
-                        ],
-                        image: DecorationImage(
-                          image: NetworkImage(lawyer.fotosPerfil![0]),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width - 30 - 180 - 20,
-                    margin: const EdgeInsets.only(left: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 10),
-                        Text('${lawyer.nombre}',
-                            style: TextStyle(fontSize: 30)),
-                        Text('Especialización: ${lawyer.especializacion}',
-                            style: TextStyle(
-                                fontSize: 20, color: Color(0xFF7b8ea3))),
-                        Divider(color: Colors.grey),
-                        Text(
-                            'Ubicación: ${lawyer.ubicacion.ciudad}, ${lawyer.ubicacion.pais}',
-                            style: TextStyle(
-                                fontSize: 16, color: Color(0xFF7b8ea3))),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(height: 40),
-            Divider(color: Color(0xFF7b8ea3)),
-            SizedBox(height: 10),
-            Container(
-              padding: const EdgeInsets.only(right: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Icon(Icons.favorite, color: Color(0xFF7b8ea3), size: 30),
-                      SizedBox(width: 10),
-                      Text('Me gusta', style: TextStyle(fontSize: 15)),
-                    ],
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      Icon(Icons.share, color: Color(0xFF7b8ea3), size: 30),
-                      SizedBox(width: 10),
-                      Text('Compartir', style: TextStyle(fontSize: 15)),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 40),
+            SizedBox(height: 20),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Detalles', style: TextStyle(fontSize: 30)),
-                Expanded(child: Container()),
+                Container(
+                  width: 150,
+                  height: 180,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                    image: DecorationImage(
+                      image: NetworkImage(abogado.fotoPerfil),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 20),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        abogado.nombre,
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Especialización: ${abogado.especializacion}',
+                        style:
+                            TextStyle(fontSize: 20, color: Color(0xFF7b8ea3)),
+                      ),
+                      Divider(color: Colors.grey),
+                      Icon(
+                        Icons.location_on_outlined,
+                        color: Colors.yellow,
+                        size: 32,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        '${abogado.ciudad}, ${abogado.pais}',
+                        style:
+                            TextStyle(fontSize: 16, color: Color(0xFF7b8ea3)),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
-            SizedBox(height: 30),
-            Container(
-              height: 200,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('${lawyer.contacto.correo}',
-                      style: TextStyle(fontSize: 16, color: Colors.black87)),
-                  SizedBox(height:10), 
-                  Text('${lawyer.contacto.telefono}',
-                    style: TextStyle(fontSize: 16, color: Colors.black87),
-                  ),
-                  SizedBox(height:10), 
-                  Text('${lawyer.firmaLegal.nombre}',
-                    style: TextStyle(fontSize: 16, color: Colors.black87),
-                  ),
-                  SizedBox(height:10), 
-                  Text('${lawyer.tarifasHonorarios.monto}''${lawyer.tarifasHonorarios.tipo}',
-                    style: TextStyle(fontSize: 16, color: Colors.black87),
-                  ),
-                  SizedBox(height:10), 
-                  Text('${lawyer.disponibilidad.dias}',
-                    style: TextStyle(fontSize: 16, color: Colors.black87),
-                  ),
-                  SizedBox(height:10), 
-                  Text('${lawyer.disponibilidad.horario}',
-                    style: TextStyle(fontSize: 16, color: Colors.black87),
-                  ),
-                ],
-              ),
-            ),
+            SizedBox(height: 40),
             Divider(color: Color(0xFF7b8ea3)),
+            SizedBox(height: 20),
+            Text(
+              'Detalles',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Text(
+              ' ${abogado.descripcion}',
+              style: TextStyle(fontSize: 18, color: Colors.black87),
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Correo: ${abogado.correo}',
+              style: TextStyle(fontSize: 18, color: Colors.black87),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Teléfono: ${abogado.telefono}',
+              style: TextStyle(fontSize: 18, color: Colors.black87),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Firma Legal: ${abogado.firmaLegal}',
+              style: TextStyle(fontSize: 18, color: Colors.black87),
+            ),
+            SizedBox(height: 20),
             GestureDetector(
               onTap: () {
-                 Navigator.push(context, MaterialPageRoute(builder: (context) => OnboardingPage1())); 
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => OnboardingPage1()));
               },
               child: Container(
-                padding: const EdgeInsets.only(right: 20),
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(vertical: 15),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(30),
+                ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Agendar una cita', style: TextStyle(fontSize: 20)),
-                    Expanded(child: Container()),
-                    IconButton(
-                        icon: Icon(Icons.arrow_forward_ios), onPressed: null),
+                    Text(
+                      'Agendar una cita',
+                      style: TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                    SizedBox(width: 10),
+                    Icon(Icons.arrow_forward_ios, color: Colors.white),
                   ],
                 ),
               ),
             ),
-            Divider(color: Color(0xFF7b8ea3)),
           ],
         ),
       ),
