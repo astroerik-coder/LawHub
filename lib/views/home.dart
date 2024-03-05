@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lawhub/views/Form2.dart';
+import 'package:lawhub/views/abogados/abogados_lista.dart';
 import 'package:lawhub/views/Inicio.dart';
 import 'package:lawhub/views/citas/ListaTareasAbogados.dart';
 import 'package:lawhub/views/components/bottom_bar.dart';
@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   static const List<Widget> _contenidoForm = [
     Inicio(),
-    Form2(),
+    Abogados_Lista(),
     ListaTareasAbogadosFake(),
     ProfileScreen()
   ];

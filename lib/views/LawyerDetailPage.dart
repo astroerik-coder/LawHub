@@ -63,17 +63,21 @@ class LawyerDetailPage extends StatelessWidget {
                         style:
                             TextStyle(fontSize: 20, color: Color(0xFF7b8ea3)),
                       ),
-                      Divider(color: Colors.grey),
-                      Icon(
-                        Icons.location_on_outlined,
-                        color: Colors.yellow,
-                        size: 32,
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        '${abogado.ciudad}, ${abogado.pais}',
-                        style:
-                            TextStyle(fontSize: 16, color: Color(0xFF7b8ea3)),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.location_on_outlined,
+                            color: Colors.yellow,
+                            size: 32,
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            '${abogado.ciudad}, ${abogado.pais}',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xFF7b8ea3)),
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -89,7 +93,7 @@ class LawyerDetailPage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             Text(
-              ' ${abogado.descripcion}',
+              '${abogado.descripcion}',
               style: TextStyle(fontSize: 18, color: Colors.black87),
             ),
             SizedBox(height: 20),
