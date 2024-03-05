@@ -16,6 +16,7 @@ class WelcomeScreen extends StatelessWidget {
       child: Builder(
         builder: (context) {
           return Scaffold(
+            backgroundColor: Colors.white,
             body: BlocListener<WelcomeBloc, WelcomeInitial>(
               listener: (context, state) {
                 switch (state.pressTarget) {

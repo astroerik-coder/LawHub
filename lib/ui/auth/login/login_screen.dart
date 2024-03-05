@@ -31,6 +31,7 @@ class _LoginScreen extends State<LoginScreen> {
       create: (context) => LoginBloc(),
       child: Builder(builder: (context) {
         return Scaffold(
+          backgroundColor: Colors.white,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             iconTheme: IconThemeData(
@@ -46,8 +47,10 @@ class _LoginScreen extends State<LoginScreen> {
                     pushAndRemoveUntil(
                         context, HomeScreen(user: state.user!), false);
                   } else {
-                    showSnackBar(context,
-                        state.message ?? 'No se puedo Iniciar Sesión. Intenta de nuevo');
+                    showSnackBar(
+                        context,
+                        state.message ??
+                            'No se puedo Iniciar Sesión. Intenta de nuevo');
                   }
                 },
               ),

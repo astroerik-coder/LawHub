@@ -8,12 +8,11 @@ import 'package:lawhub/models/user.dart';
 import 'package:lawhub/services/helper.dart';
 import 'package:lawhub/ui/auth/authentication_bloc.dart';
 import 'package:lawhub/ui/auth/welcome/welcome_screen.dart';
-import 'package:lawhub/views/abogados/abogados_lista.dart';
-import 'package:lawhub/views/citas/ListaTareasAbogados.dart';
-import 'package:lawhub/views/profile/profile_screen.dart';
+import 'package:lawhub/ui/abogados/abogados_lista.dart';
+import 'package:lawhub/ui/citas/ListaTareasAbogados.dart';
+import 'package:lawhub/ui/auth/profile/profile_screen.dart';
 import 'package:provider/provider.dart';
-
-import '../../views/Inicio.dart';
+import '../Inicio.dart';
 import '../../views/components/bottom_bar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -31,8 +30,8 @@ class _HomeState extends State<HomeScreen> {
   int _selectedIndex = 0;
   static const List<Widget> _contenidoForm = [
     Inicio(),
-    Abogados_Lista(),
-    ListaTareasAbogadosFake(),
+    AbogadosLista(),
+    ListaTareasAbogados(),
     ProfileScreen()
   ];
 
@@ -57,6 +56,7 @@ class _HomeState extends State<HomeScreen> {
         }
       },
       child: Scaffold(
+        backgroundColor: Colors.white,
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
@@ -67,7 +67,7 @@ class _HomeState extends State<HomeScreen> {
                   style: TextStyle(color: Colors.white),
                 ),
                 decoration: BoxDecoration(
-                  color: Color(COLOR_PRIMARY),
+                  color: Color.fromRGBO(53, 181, 184, 300),
                 ),
               ),
               ListTile(
@@ -77,7 +77,7 @@ class _HomeState extends State<HomeScreen> {
                 ),
                 leading: Transform.rotate(
                     angle: pi / 1,
-                    child: const Icon(Icons.exit_to_app, color: Colors.black)),
+                    child: const Icon(Icons.exit_to_app, color: Colors.red)),
                 onTap: () {
                   context.read<AuthenticationBloc>().add(LogoutEvent());
                 },
@@ -91,7 +91,7 @@ class _HomeState extends State<HomeScreen> {
           centerTitle: true,
           actions: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10.0),
               child: Text(user.fullName()),
             ),
             user.profilePictureURL == ''
@@ -109,7 +109,7 @@ class _HomeState extends State<HomeScreen> {
                       ),
                     ),
                   )
-                : displayCircleImage(user.profilePictureURL, 80, false),
+                : displayCircleImage(user.profilePictureURL, 50, false),
           ],
         ),
         body: Center(
@@ -119,42 +119,6 @@ class _HomeState extends State<HomeScreen> {
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
         ),
-        /* child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              user.profilePictureURL == ''
-                  ? CircleAvatar(
-                      radius: 35,
-                      backgroundColor: Colors.grey.shade400,
-                      child: ClipOval(
-                        child: SizedBox(
-                          width: 70,
-                          height: 70,
-                          child: Image.asset(
-                            'assets/images/placeholder.jpg',
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    )
-                  : displayCircleImage(user.profilePictureURL, 80, false),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(user.fullName()),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(user.email),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(user.userID),
-              ),
-            ],
-          ), 
-        ),*/
       ),
     );
   }

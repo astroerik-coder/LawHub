@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import '../../models/Abogados_Model.dart';
 import '../../services/Abogados_Services.dart';
-import '../LawyerDetailPage.dart';
+import 'LawyerDetailPage.dart';
 import 'package:animations/animations.dart';
 
-class Abogados_Lista extends StatefulWidget {
-  const Abogados_Lista({Key? key}) : super(key: key);
+class AbogadosLista extends StatefulWidget {
+  const AbogadosLista({Key? key}) : super(key: key);
 
   @override
-  State<Abogados_Lista> createState() => _Abogados_Lista();
+  State<AbogadosLista> createState() => _AbogadosListaState();
 }
 
-class _Abogados_Lista extends State<Abogados_Lista> {
+class _AbogadosListaState extends State<AbogadosLista> {
   final AbogadosService _abogadosService = AbogadosService();
   List<Abogado>? _lista;
   List<Abogado>? _filteredLista;
@@ -110,86 +110,54 @@ class _Abogados_Lista extends State<Abogados_Lista> {
                     itemCount: _filteredLista!.length,
                     itemBuilder: (context, index) {
                       Abogado abogado = _filteredLista![index];
-                      ContainerTransitionType _transitionType =
-                          ContainerTransitionType.fade;
-
                       return OpenContainer<bool>(
-                        transitionType: _transitionType,
+                        transitionType: ContainerTransitionType.fade,
                         openBuilder:
                             (BuildContext _, VoidCallback openContainer) {
                           return LawyerDetailPage(abogado: abogado);
                         },
                         closedShape: const RoundedRectangleBorder(),
-                        closedElevation: 0.0,
+                        closedElevation: 4,
                         closedBuilder:
                             (BuildContext _, VoidCallback openContainer) {
-                          return GestureDetector(
-                            onTap: openContainer,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
+                          return Card(
+                            elevation: 4,
+                            margin: EdgeInsets.symmetric(vertical: 10),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: ListTile(
+                              onTap: openContainer,
+                              leading: CircleAvatar(
+                                backgroundImage: NetworkImage(
+                                  abogado.fotoPerfil.isNotEmpty == true
+                                      ? abogado.fotoPerfil ?? ''
+                                      : 'https://via.placeholder.com/150',
+                                ),
                               ),
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              child: Column(
+                              title: Text(
+                                abogado.nombre.toString(),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(15),
-                                    child: Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Image.network(
-                                          abogado.fotoPerfil.isNotEmpty == true
-                                              ? abogado.fotoPerfil ?? ''
-                                              : '',
-                                          height: 100,
-                                          width: 100,
-                                          fit: BoxFit.cover,
-                                        ),
-                                        Container(width: 20),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Container(height: 5),
-                                              Text(
-                                                abogado.nombre.toString(),
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.black87,
-                                                ),
-                                              ),
-                                              Container(height: 5),
-                                              Text(
-                                                abogado.especializacion
-                                                    .toString(),
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.black87,
-                                                ),
-                                              ),
-                                              Container(height: 5),
-                                              Text(
-                                                abogado.firmaLegal,
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.black87,
-                                                ),
-                                              ),
-                                              Container(height: 5),
-                                              Text(
-                                                abogado.correo ?? '',
-                                                style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.black87,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                                children: [
+                                  Text(
+                                    abogado.especializacion.toString(),
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    abogado.firmaLegal,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Colors.grey[600],
                                     ),
                                   ),
                                 ],
@@ -206,6 +174,3 @@ class _Abogados_Lista extends State<Abogados_Lista> {
     );
   }
 }
- 
-
-

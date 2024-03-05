@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './model.dart';
+import 'model.dart';
 
 class EstudioJuridicoItem extends StatelessWidget {
   final EstudioJuridico estudioJuridico;

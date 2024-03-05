@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import './model.dart';
-import './estudio_detalles.dart';
-import './estudio_item.dart';
+import 'model.dart';
+import 'estudio_detalles.dart';
+import 'estudio_item.dart';
 
 class EstudioJuridicoList extends StatelessWidget {
   final List<EstudioJuridico> estudiosJuridicos = EstudioJuridico.generarListaEstudios();

@@ -56,8 +56,8 @@ class _SignUpState extends State<SignUpScreen> {
               BlocListener<SignUpBloc, SignUpState>(
                 listener: (context, state) {
                   if (state is ValidFields) {
-                    context.read<LoadingCubit>().showLoading(
-                        context, 'Creando tu nueva cuenta, Por favor espera...', false);
+                    context.read<LoadingCubit>().showLoading(context,
+                        'Creando tu nueva cuenta, Por favor espera...', false);
                     context.read<AuthenticationBloc>().add(
                         SignupWithEmailAndPasswordEvent(
                             emailAddress: email!,
@@ -72,6 +72,7 @@ class _SignUpState extends State<SignUpScreen> {
               ),
             ],
             child: Scaffold(
+              backgroundColor: Colors.white,
               appBar: AppBar(
                 elevation: 0.0,
                 backgroundColor: Colors.transparent,
