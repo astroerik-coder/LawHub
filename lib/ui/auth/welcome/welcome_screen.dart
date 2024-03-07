@@ -46,7 +46,7 @@ class WelcomeScreen extends StatelessWidget {
                     padding: EdgeInsets.only(
                         left: 16, top: 32, right: 16, bottom: 8),
                     child: Text(
-                      '¡Dile hola a tu nueva aplicación!',
+                      '¡Encuentra al abogado que necesitas!',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: Color(COLOR_PRIMARY),
@@ -71,7 +71,10 @@ class WelcomeScreen extends StatelessWidget {
                       child: const Text(
                         'Iniciar sesión',
                         style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
+                            fontSize: 20, 
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white
+                            ),
                       ),
                       onPressed: () {
                         context.read<WelcomeBloc>().add(LoginPressed());

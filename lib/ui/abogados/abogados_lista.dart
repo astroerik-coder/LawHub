@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import '../../models/Abogados_Model.dart';
 import '../../services/Abogados_Services.dart';
-import 'LawyerDetailPage.dart';
+import 'abogados_detalles.dart';
 import 'package:animations/animations.dart';
 
 class AbogadosLista extends StatefulWidget {
@@ -114,7 +114,7 @@ class _AbogadosListaState extends State<AbogadosLista> {
                         transitionType: ContainerTransitionType.fade,
                         openBuilder:
                             (BuildContext _, VoidCallback openContainer) {
-                          return LawyerDetailPage(abogado: abogado);
+                          return Abogados_Detalles(abogado: abogado);
                         },
                         closedShape: const RoundedRectangleBorder(),
                         closedElevation: 4,

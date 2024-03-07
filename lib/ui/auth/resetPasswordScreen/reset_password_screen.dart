@@ -24,6 +24,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
       child: Builder(
         builder: (context) {
           return Scaffold(
+            backgroundColor:Colors.white,
             appBar: AppBar(
               backgroundColor: Colors.transparent,
               iconTheme: IconThemeData(
@@ -41,7 +42,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 } else if (state is ValidResetPasswordField) {
                   context
                       .read<LoadingCubit>()
-                      .showLoading(context, 'Sending Email...', false);
+                      .showLoading(context, 'Enviando correo electrónico...', false);
                   context
                       .read<ResetPasswordCubit>()
                       .resetPassword(_emailAddress);
@@ -66,7 +67,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                           padding: EdgeInsets.only(
                               top: 32.0, right: 16.0, left: 16.0),
                           child: Text(
-                            'Reset Password',
+                            'Reiniciar Contraseñas',
                             style: TextStyle(
                                 color: Color(COLOR_PRIMARY),
                                 fontSize: 25.0,
@@ -88,7 +89,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             keyboardType: TextInputType.emailAddress,
                             cursorColor: const Color(COLOR_PRIMARY),
                             decoration: getInputDecoration(
-                                hint: 'E-mail',
+                                hint: 'Correo electrónico',
                                 darkMode: isDarkMode(context),
                                 errorColor: Theme.of(context).errorColor),
                           ),
@@ -109,7 +110,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               ),
                             ),
                             child: const Text(
-                              'Send Email',
+                              'Enviar Correo electrónico',
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,

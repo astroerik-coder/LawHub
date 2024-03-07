@@ -14,7 +14,6 @@ class AbogadosService {
           db.collection('abogados');
       QuerySnapshot queryEstudios = await collectionReferenceEstudios.get();
       queryEstudios.docs.forEach((doc) {
-        // Convertir los datos del documento a un objeto Abogado y añadirlo a la lista
         Abogado abogado = Abogado.fromJson(doc.data() as Map<String, dynamic>);
         abogados.add(abogado);
       });

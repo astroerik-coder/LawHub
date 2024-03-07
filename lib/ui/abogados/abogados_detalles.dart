@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lawhub/views/agendar/OnboardingPage1.dart';
+import 'package:lawhub/ui/agendar/citas_abogados.dart';
 import '../../models/Abogados_Model.dart';
 
-class LawyerDetailPage extends StatelessWidget {
+class Abogados_Detalles extends StatelessWidget {
   final Abogado abogado;
 
-  LawyerDetailPage({required this.abogado});
+  Abogados_Detalles({required this.abogado});
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +115,7 @@ class LawyerDetailPage extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => OnboardingPage1()));
+                    MaterialPageRoute(builder: (context) => AgendarCitaPage(nombreAbogado: abogado.nombre)));
               },
               child: Container(
                 alignment: Alignment.center,

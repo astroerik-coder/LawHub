@@ -9,7 +9,7 @@ import 'package:lawhub/services/helper.dart';
 import 'package:lawhub/ui/auth/authentication_bloc.dart';
 import 'package:lawhub/ui/auth/welcome/welcome_screen.dart';
 import 'package:lawhub/ui/abogados/abogados_lista.dart';
-import 'package:lawhub/ui/citas/ListaTareasAbogados.dart';
+import 'package:lawhub/ui/citas/lista_citas.dart';
 import 'package:lawhub/ui/auth/profile/profile_screen.dart';
 import 'package:provider/provider.dart';
 import '../Inicio.dart';
@@ -31,7 +31,7 @@ class _HomeState extends State<HomeScreen> {
   static const List<Widget> _contenidoForm = [
     Inicio(),
     AbogadosLista(),
-    ListaTareasAbogados(),
+    ListaCitasAbogados(),
     ProfileScreen()
   ];
 
