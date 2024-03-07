@@ -140,7 +140,7 @@ class EstudioJuridicoDetails extends StatelessWidget {
                   ),
                 )
                 .toList(),
-            Padding(
+            /* Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 25),
@@ -158,7 +158,7 @@ class EstudioJuridicoDetails extends StatelessWidget {
                   child: Text('Aplicar ahora'),
                 ),
               ),
-            ),
+            ), */
           ],
         ),
       ),
